@@ -317,6 +317,9 @@ If you use WildOps in your research or project, please cite:
 }
 ```
 
+## 💰 Funding
+This work was funded by the European Union’s Horizon Europe research and innovation funding programme under the Marie Skłodowska-Curie grant agreement no. 101071224.
+
 ## 🙏 Acknowledgments
 
 - Developed for wildlife conservation drone operations
