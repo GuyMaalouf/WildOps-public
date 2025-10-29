@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Map{% endblock %}
+
+{% block content %}
+<div id="map">
+    {% include 'MapApp/map_options.html' %}
+</div>
+<script>
+    var predefinedZoom = 2; // Define your predefined zoom level here
+
+    // Assuming the map object is already created and available in the global scope
+    map.getView().setZoom(predefinedZoom); // Set the predefined zoom level
+</script>
+{% endblock %}

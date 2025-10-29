@@ -1,0 +1,98 @@
+# Ignore Python bytecode files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Ignore virtual environment folders
+venv/
+env/
+ENV/
+wildops_venv/
+.venv/
+
+# Keep initial migrations, ignore new ones and __pycache__ in migrations
+*/migrations/__pycache__/
+# Note: Migrations are tracked to ensure database schema consistency
+
+# Ignore environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# Ignore database files
+db.sqlite3
+*.sqlite3
+*.db
+
+# Ignore Django static and media files
+staticfiles/
+media/
+
+# Ignore IDE configuration files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# Ignore macOS files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Ignore Windows files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Ignore script logs
+WildOpsProject/scripts/logs/
+*.log
+
+# Ignore generated PDFs
+WildOpsProject/WildProcedures/static/WildProcedures/pdfs/
+
+# Ignore draft JSON files with potentially sensitive data
+WildOpsProject/WildProcedures/data/json_drafts/
+
+# Ignore test coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# Ignore pytest cache
+.pytest_cache/
+.tox/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore compiled translations
+*.mo
+*.pot

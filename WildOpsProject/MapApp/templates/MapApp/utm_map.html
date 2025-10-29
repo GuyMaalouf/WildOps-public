@@ -1,0 +1,363 @@
+{% load static %}
+<div id="map-options" class="collapsed">
+    <span class="close-btn" onclick="toggleMapOptions()">&times;</span>
+    <div class="title">Map Options</div>
+    <label for="layer-select">Background Layer:</label>
+    <select id="layer-select">
+        <option value="osm">Standard</option>
+        <option value="aerial">Aerial</option>
+        <option value="terrain">Terrain</option>
+    </select>
+</div>
+<span class="open-btn" id="map-options-btn" onclick="toggleMapOptions()">&#9776; </span>
+
+<!-- Popup for UTM operation details -->
+<div id="popup" class="ol-popup">
+    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+    <div id="popup-content"></div>
+</div>
+
+<script>
+    function toggleMapOptions() {
+        var mapOptions = document.getElementById("map-options");
+        var mapOptionsBtn = document.getElementById("map-options-btn");
+        if (mapOptions.classList.contains("collapsed")) {
+            mapOptions.classList.remove("collapsed");
+            mapOptionsBtn.style.display = "none"; // Hide the button
+        } else {
+            mapOptions.classList.add("collapsed");
+            mapOptionsBtn.style.display = "block"; // Show the button
+        }
+    }
+
+    var osmLayer = new ol.layer.Tile({
+        source: new ol.source.OSM()
+    });
+
+    var aerialLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+        })
+    });
+
+    var terrainLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png'
+        })
+    });
+
+    var mapLayers = {
+        'osm': osmLayer,
+        'aerial': aerialLayer,
+        'terrain': terrainLayer
+    };
+
+    // Function to save the map state to localStorage
+    function saveMapState() {
+        var view = map.getView();
+        var center = ol.proj.toLonLat(view.getCenter());
+        var zoom = view.getZoom();
+        localStorage.setItem('mapCenter', JSON.stringify(center));
+        localStorage.setItem('mapZoom', zoom);
+    }
+
+    // Function to load the map state from localStorage
+    function loadMapState() {
+        var center = localStorage.getItem('mapCenter');
+        var zoom = localStorage.getItem('mapZoom');
+        if (center && zoom) {
+            return {
+                center: JSON.parse(center),
+                zoom: parseFloat(zoom)
+            };
+        }
+        return null;
+    }
+
+    // Load the map state if it exists
+    var mapState = loadMapState();
+    var initialCenter = mapState ? ol.proj.fromLonLat(mapState.center) : ol.proj.fromLonLat([36.8569, 0.0174]);
+    var initialZoom = mapState ? mapState.zoom : 12;
+
+    var map = new ol.Map({
+        target: 'map',
+        layers: [osmLayer],
+        view: new ol.View({
+            center: initialCenter, // Coordinates for Ol Pejeta Conservancy
+            zoom: initialZoom, // Specific zoom level
+            minZoom: 2 // Set minimum zoom level
+        })
+    });
+
+    // Save the map state whenever the view changes
+    map.getView().on('change:center', saveMapState);
+    map.getView().on('change:resolution', saveMapState);
+
+    document.getElementById('layer-select').addEventListener('change', function() {
+        var selectedLayer = this.value;
+        map.getLayers().setAt(0, mapLayers[selectedLayer]);
+    });
+
+    // Function to get the style based on the operation state
+    function getStyleForState(request_state,activation_state) {
+        switch (request_state) {
+            case 'requested':
+                return new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: 'grey',
+                        width: 2
+                    }),
+                    fill: new ol.style.Fill({
+                        color: 'rgba(128, 128, 128, 0.5)'
+                    })
+                });
+            case 'declined':
+                return new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: 'rgba(139, 0, 0, 0.5)',
+                        width: 2,
+                        lineDash: [4, 8]
+                    }),
+                    fill: new ol.style.Fill({
+                        color: 'rgba(139, 0, 0, 0.2)'
+                    })
+                });   
+            case 'approved':
+                switch (activation_state) {
+                    case 'active':
+                        return new ol.style.Style({
+                            stroke: new ol.style.Stroke({
+                                color: 'green',
+                                width: 2
+                            }),
+                            fill: new ol.style.Fill({
+                                color: 'rgba(0, 128, 0, 0.5)'
+                            })
+                        });
+                    case 'inactive':
+                        return new ol.style.Style({
+                            stroke: new ol.style.Stroke({
+                                color: 'orange',
+                                width: 2
+                            }),
+                            fill: new ol.style.Fill({
+                                color: 'rgba(255, 165, 0, 0.5)'
+                            })
+                        });
+                    case 'expired':
+                        return new ol.style.Style({
+                            stroke: new ol.style.Stroke({
+                                color: 'red',
+                                width: 2
+                            }),
+                            fill: new ol.style.Fill({
+                                color: 'rgba(255, 0, 0, 0.2)'
+                            })
+                        });
+                    default:
+                        return new ol.style.Style({
+                            stroke: new ol.style.Stroke({
+                                color: 'blue',
+                                width: 2
+                            }),
+                            fill: new ol.style.Fill({
+                                color: 'rgba(0, 0, 255, 0.5)'
+                            })
+                        });
+                }
+            default:
+                return new ol.style.Style({
+                    stroke: new ol.style.Stroke({
+                        color: 'grey',
+                        width: 2
+                    }),
+                    fill: new ol.style.Fill({
+                        color: 'rgba(128, 128, 128, 0.5)'
+                    })
+                });
+        }
+    }
+
+    //############UTM OPERATIONS OVERLAY#####################
+    var vectorLayer; // Declare a variable to hold the reference to the vector layer
+
+    // Function to clear the map
+    function clearUTMOperationsFromMap() {
+        if (vectorLayer) {
+            map.removeLayer(vectorLayer);
+            vectorLayer = null; // Clear the reference to the removed layer
+        }
+    }
+
+    // Function to add UTM operations to the map
+    function addUTMOperationsToMap(operations) {
+        var features = operations.map(function(operation) {
+            var center = ol.proj.fromLonLat([Number(operation.longitude), Number(operation.latitude)]);
+            var radius = operation.radius * 1000; // Convert km to meters
+
+            var circle = new ol.geom.Circle(center, radius);
+            var circleFeature = new ol.Feature(circle);
+
+            var style = getStyleForState(operation.request_state, operation.activation_state);
+            style.setText(new ol.style.Text({
+                text: operation.operation_id.toString(),
+                fill: new ol.style.Fill({color: 'black'}),
+                stroke: new ol.style.Stroke({color: 'white', width: 2}),
+                offsetY: -15
+            }));
+
+            circleFeature.setStyle(style);
+            circleFeature.setProperties({
+                operation_id: operation.operation_id,
+                pic: operation.rpic,
+                start_datetime: operation.start_datetime,
+                end_datetime: operation.end_datetime,
+                request_state: operation.request_state,
+                activation_state: operation.activation_state,
+                originalStyle: style // Store the original style
+            });
+            return circleFeature;
+        });
+
+        var vectorSource = new ol.source.Vector({
+            features: features
+        });
+
+        vectorLayer = new ol.layer.Vector({
+            source: vectorSource
+        });
+
+        map.addLayer(vectorLayer);
+    }
+
+    // Create an overlay to anchor the popup to the map
+    var popup = new ol.Overlay({
+        element: document.getElementById('popup'),
+        autoPan: true,
+        autoPanAnimation: {
+            duration: 250
+        }
+    });
+    map.addOverlay(popup);
+
+    // Add a click handler to hide the popup
+    document.getElementById('popup-closer').onclick = function() {
+        popup.setPosition(undefined);
+        this.blur();
+        return false;
+    };
+
+    // Function to format date and time
+    function formatDateTime(dateTimeStr) {
+        var date = new Date(dateTimeStr);
+        var day = ('0' + date.getDate()).slice(-2);
+        var month = ('0' + (date.getMonth() + 1)).slice(-2);
+        var year = date.getFullYear().toString().slice(-2);
+        var hours = ('0' + date.getHours()).slice(-2);
+        var minutes = ('0' + date.getMinutes()).slice(-2);
+        return `${day}/${month}/${year} - ${hours}:${minutes}`;
+    }
+
+    // Add a click handler to the map to render the popup
+    map.on('singleclick', function(evt) {
+        if (isFormOpen) {
+            // Handle map click for selecting location
+            var coordinates = ol.proj.toLonLat(evt.coordinate);
+            var latitude = coordinates[1].toFixed(6);
+            var longitude = coordinates[0].toFixed(6);
+            document.getElementById('location').value = latitude + ', ' + longitude;
+            document.getElementById('latitude').value = latitude;
+            document.getElementById('longitude').value = longitude;
+            // Optionally, you can add a marker or other visual indication on the map
+            addMarker(evt.coordinate);
+        } else {
+            // Handle map click for displaying operation details
+            var feature = map.forEachFeatureAtPixel(evt.pixel, function(feature) {
+                return feature;
+            });
+            if (feature && feature.get('operation_id')) {
+                var geometry = feature.getGeometry();
+                var coordinates;
+                if (geometry.getType() === 'Circle') {
+                    coordinates = geometry.getCenter();
+                } else {
+                    coordinates = geometry.getCoordinates();
+                }
+                var status;
+                if (feature.get('request_state') === 'approved') {
+                    status = feature.get('activation_state');
+                } else {
+                    status = feature.get('request_state');
+                }
+                var startDateTime = formatDateTime(feature.get('start_datetime'));
+                var endDateTime = formatDateTime(feature.get('end_datetime'));
+                var content = '<p><strong>Operation ID:</strong> ' + feature.get('operation_id') + '</p>' +
+                            '<p><strong>Pilot:</strong> ' + feature.get('pic') + '</p>' +
+                            '<p><strong>Start:</strong> ' + startDateTime + '</p>' +
+                            '<p><strong>End:</strong> ' + endDateTime + '</p>' +
+                            '<p><strong>Status:</strong> ' + status + '</p>';
+                document.getElementById('popup-content').innerHTML = content;
+                popup.setPosition(coordinates);
+            } else {
+                popup.setPosition(undefined);
+            }
+        }
+    });
+
+    map.on('singleclick', function(evt) {
+        var coordinates = ol.proj.toLonLat(evt.coordinate);
+        var latitude = coordinates[1].toFixed(6);
+        var longitude = coordinates[0].toFixed(6);
+        document.getElementById('location').value = latitude + ', ' + longitude;
+        document.getElementById('latitude').value = latitude;
+        document.getElementById('longitude').value = longitude;
+        // Optionally, you can add a marker or other visual indication on the map
+        addMarker(evt.coordinate);
+    });
+
+    function addMarker(coordinate) {
+        var marker = new ol.Feature({
+            geometry: new ol.geom.Point(coordinate)
+        });
+        var markerStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                src: '{% static "MapApp/images/crosshair.png" %}', // Replace with the path to your marker icon
+                scale: 0.05
+            })
+        });
+        marker.setStyle(markerStyle);
+        var vectorSource = new ol.source.Vector({
+            features: [marker]
+        });
+        var vectorLayer = new ol.layer.Vector({
+            source: vectorSource
+        });
+        map.addLayer(vectorLayer);
+    }
+
+    // Function to add KML layers with patrol block names
+    var patrol_blocks_kml = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            url: '{% static "MapApp/kml/Patrol_Blocks.kml" %}',
+            format: new ol.format.KML()
+        }),
+    });
+    map.addLayer(patrol_blocks_kml);
+
+    var airfields_kml = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            url: '{% static "MapApp/kml/airfields.kml" %}',
+            format: new ol.format.KML()
+        }),
+    });
+    map.addLayer(airfields_kml);
+
+    var flight_geographies_kml = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            url: '{% static "MapApp/kml/flight_geographies.kml" %}',
+            format: new ol.format.KML()
+        }),
+    });
+    map.addLayer(flight_geographies_kml);
+    
+</script>

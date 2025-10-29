@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Operational Procedures{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'WildProcedures/css/procedures.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="top-form">
+    <h1>Create Procedure</h1>
+    <!-- Form at the top -->
+    <form method="POST" class="procedure-form">
+      {% csrf_token %}
+      <table class="form-table">
+        <tr>
+          <td class="form-cell">
+            <div class="form-group">
+              <label for="{{ form.operation_type.id_for_label }}">{{ form.operation_type.label }}</label>
+              {{ form.operation_type }}
+            </div>
+          </td>
+          <td class="form-cell">
+            <div class="form-group">
+              <label for="{{ form.drone_platform.id_for_label }}">{{ form.drone_platform.label }}</label>
+              {{ form.drone_platform }}
+            </div>
+          </td>
+          <td class="form-cell">
+            <div class="form-group">
+                <label for="{{ form.number_of_drones.id_for_label }}">{{ form.number_of_drones.label }}</label>
+                {{ form.number_of_drones }}
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="form-cell" colspan="3">
+            <div class="actions">
+              <button type="submit" class="btn btn-primary">Generate</button>
+              <button type="button"
+                      class="btn btn-primary"
+                      {% if not pdf_generated %}disabled{% endif %}
+                      onclick="window.location.href='{{ download_url }}'">
+                Download
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+</div>
+
+<!-- Use a table to split the view into two columns -->
+<table class="pdf-table">
+  <tr>
+    <td class="pdf-cell">
+      <!-- Left side: checklist PDF -->
+      {% if pdf_generated %}
+      <iframe src="{{ checklist_pdf_url }}" width="100%" height="600">
+        <p>Checklist PDF cannot be displayed.</p>
+      </iframe>
+      {% else %}
+      <p>Checklist PDF will be displayed here after generation.</p>
+      {% endif %}
+    </td>
+    <td class="pdf-cell">
+      <!-- Right side: procedure PDF -->
+      {% if pdf_generated %}
+      <iframe src="{{ procedure_pdf_url }}" width="100%" height="600">
+        <p>Procedure PDF cannot be displayed.</p>
+      </iframe>
+      {% else %}
+      <p>Procedure PDF will be displayed here after generation.</p>
+      {% endif %}
+    </td>
+  </tr>
+</table>
+{% endblock %}

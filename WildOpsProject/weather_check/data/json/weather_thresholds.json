@@ -1,0 +1,26 @@
+{
+    "temperature": {
+      "green": 25,
+      "yellow": 35
+    },
+    "precipitation": {
+      "green": 20,
+      "yellow": 50
+    },
+    "wind_speed": {
+      "green": 10,
+      "yellow": 20
+    },
+    "wind_gust": {
+      "green": 15,
+      "yellow": 25
+    },
+    "visibility": {
+      "green": 10,
+      "yellow": 5
+    },
+    "kp_index": {
+      "green": 3,
+      "yellow": 5
+    }
+  }

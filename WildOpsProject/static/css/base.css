@@ -1,0 +1,16 @@
+:root {
+    --primary-color: #B07356;
+    --secondary-color: #B3B9A2;
+    --light-neutral: #FFFCF2;
+    --light-neutral-fade: #d6d0c0;
+    --dark-neutral: #361D2E;
+    --accent-color: #FFB200;
+}
+
+body {
+    font-family: 'Libre Franklin', sans-serif;
+    background-color: var(--light-neutral);
+    color: var(--dark-neutral);
+    margin: 0;
+    padding: 0;
+}

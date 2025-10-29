@@ -1,0 +1,552 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Operation Request{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'MapApp/css/utm.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="sidebar">
+        <h1>Operation Requests</h1>
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="toggleForm()">+ Add New</button>
+            <label for="show-history" class="show-history-label">
+                <input type="checkbox" id="show-history" onchange="applyFilter()">
+                <i class="fas fa-history"></i> Show history
+            </label>
+            <button class="btn btn-filter" onclick="toggleFilterDropdown()">
+                <i class="fas fa-filter"></i>
+            </button>
+        </div>
+        <div class="filter-container" style="display: none;">
+            <table class="filter-table">
+            <tr>
+                <td>
+                    <input type="checkbox" id="filter-inactive" value="inactive" onchange="applyFilter()"/>
+                </td>
+                <td>
+                    <span class="status-badge status-inactive"><span class="status-circle"></span>Inactive</span>
+                </td>
+                <td>
+                    <input type="checkbox" id="filter-active" value="active" onchange="applyFilter()"/>
+                </td>
+                <td>
+                    <span class="status-badge status-active"><span class="status-circle"></span>Active</span>
+                </td>
+                <td>
+                    <input type="checkbox" id="filter-expired" value="expired" onchange="applyFilter()"/>
+                </td>
+                <td>
+                    <span class="status-badge status-expired"><span class="status-circle"></span>Expired</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="checkbox" id="filter-requested" value="requested" onchange="applyFilter()"/>
+                </td>
+                <td>
+                    <span class="status-badge status-requested"><span class="status-circle"></span>Requested</span>
+                </td>
+                <td>
+                    <input type="checkbox" id="filter-declined" value="declined" onchange="applyFilter()"/>
+                </td>
+                <td>
+                    <span class="status-badge status-declined"><span class="status-circle"></span>Declined</span>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            </table>
+        </div>
+        <div id="operationForm" method="post" action="{% url 'operation_request' %}" class="form-container" style="display: none;">
+            <form method="post" class="compact-form">
+                {% csrf_token %}
+                <input type="hidden" id="operation_id" name="operation_id">
+                <input type="hidden" id="username" name="username" value="{{ user.username }}">
+                <div class="form-group">
+                    <label for="operation_type">Operation Type:</label>
+                    <select id="operation_type" name="operation_type" required>
+                        {% for choice in form.operation_type.field.choices %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="uas">UAS:</label>
+                    <select id="uas" name="uas" required>
+                        {% for choice in form.uas.field.choices %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="number_of_drones">Number of Drones:</label>
+                    <select id="number_of_drones" name="number_of_drones" required>
+                        {% for choice in form.number_of_drones.field.choices %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rpic">RPIC:</label>
+                    <select id="rpic" name="rpic" required>
+                        {% for choice in form.rpic.field.choices %}
+                        <option value="{{ choice.0 }}">{{ choice.1 }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <div class="location-label">
+                        <label for="location">Location:</label>
+                        <p class="map-instruction">
+                            <i class="fas fa-map-marker-alt"></i> Click on the map to select a location
+                        </p>
+                    </div>
+                    <div class="location-input">
+                        <input type="text" id="location" name="location" placeholder="Enter GPS coordinates" required>
+                    </div>
+                </div>
+                <input type="hidden" id="latitude" name="latitude">
+                <input type="hidden" id="longitude" name="longitude">
+                <div class="form-group" id="radius-input-group">
+                    <label for="radius">Radius (km):</label>
+                    <input type="number" id="radius" name="radius" max="5" step="0.1">
+                </div>
+                <div class="form-group">
+                    <label for="start_datetime">Start Date & Time:</label>
+                    <input type="datetime-local" id="start_datetime" name="start_datetime" required>
+                </div>
+                <div class="form-group">
+                    <small id="end_datetime_error" class="form-text text-danger" style="display: none; color: red;">
+                        <i class="fas fa-exclamation-triangle"></i> End Date & Time cannot be before Start Date & Time
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label for="end_datetime">End Date & Time:</label>
+                    <input type="datetime-local" id="end_datetime" name="end_datetime" required>
+                </div>
+                <input type="hidden" id="request_state" name="request_state" value="requested">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Pilot</th>
+                    <th>Timeslot</th>
+                    <th>Status</th>
+                    <th style="width: 60px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="operationsTableBody">
+                {% for operation in operations %}
+                    {% if operation.username == user.username %}
+                        <tr class="operation-row" data-operation-id="{{ operation.operation_id }}" data-activation-state="{{ operation.activation_state }}" data-request-state="{{ operation.request_state }}">
+                            <td>{{ operation.operation_id }}</td>
+                            <td>{{ operation.rpic }}</td>
+                            <td>
+                                Start: &nbsp; {{ operation.start_datetime|date:"d/m/y" }} - {{ operation.start_datetime|date:"H:i" }}<br>
+                                End: &nbsp;&nbsp;&nbsp;&nbsp;{{ operation.end_datetime|date:"d/m/y" }} - {{ operation.end_datetime|date:"H:i" }}
+                            </td>
+                            <td>
+                                {% if operation.request_state == 'approved' %}
+                                    <!-- Use the activation state as class -->
+                                    <span class="status-badge status-{{ operation.activation_state }}">
+                                        <span class="status-circle"></span>
+                                        {{ operation.get_activation_state_display }}
+                                    </span>
+                                {% else %}
+                                    <!-- Use the request state as class -->
+                                    <span class="status-badge status-{{ operation.request_state }}">
+                                        <span class="status-circle"></span>
+                                        {{ operation.get_request_state_display }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="button-grid">
+                                    <button class="btn btn-edit" onclick="editOperation({{ operation.operation_id }}, '{{ operation.operation_type }}', '{{ operation.uas }}', '{{ operation.number_of_drones }}', '{{ operation.rpic }}', '{{ operation.latitude }}', '{{ operation.longitude }}', '{{ operation.radius }}', '{{ operation.start_datetime|date:'Y-m-d\\TH:i' }}', '{{ operation.end_datetime|date:'Y-m-d\\TH:i' }}', '{{ operation.request_state }}', '{{ operation.activation_state }}')">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </button>
+                                    <button class="btn btn-delete" onclick="confirmDelete({{ operation.operation_id }})">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div id="map" class="utm-map">
+        {% include 'MapApp/utm_map.html' %}
+    </div>
+    <div class="legend-box">
+        <div class="legend-item">
+            <div class="legend-circle inactive"></div>
+            <div>Inactive</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-circle active"></div>
+            <div>Active</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-circle expired"></div>
+            <div>Expired</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-circle requested"></div>
+            <div>Requested</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-circle declined"></div>
+            <div>Declined</div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation popup -->
+<div id="deleteConfirmation" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <p>Are you sure you want to delete this operation?</p>
+        <button class="btn btn-secondary" onclick="closePopup()">Cancel</button>
+        <button class="btn btn-danger" onclick="deleteOperation()">Delete</button>
+    </div>
+</div>
+
+<script>
+    // Override the getContext method to set the willReadFrequently attribute
+    HTMLCanvasElement.prototype.getContext = (function(original) {
+        return function(type, attributes) {
+            if (type === '2d' && !attributes) {
+                attributes = { willReadFrequently: true };
+            }
+            return original.call(this, type, attributes);
+        };
+    })(HTMLCanvasElement.prototype.getContext);
+
+    var markerLayer; // Declare a variable to hold the reference to the marker layer
+
+    function handleMapClick(evt) {
+        var coordinates = ol.proj.toLonLat(evt.coordinate);
+        var latitude = coordinates[1].toFixed(6);
+        var longitude = coordinates[0].toFixed(6);
+        document.getElementById('location').value = latitude + ', ' + longitude;
+        document.getElementById('latitude').value = latitude;
+        document.getElementById('longitude').value = longitude;
+        // Optionally, you can add a marker or other visual indication on the map
+        addMarker(evt.coordinate);
+    }
+
+    function enableMapClick() {
+        map.on('singleclick', handleMapClick);
+    }
+
+    function disableMapClick() {
+        map.un('singleclick', handleMapClick);
+    }
+
+    function addMarker(coordinate) {
+        // Remove the old marker layer if it exists
+        if (markerLayer) {
+            map.removeLayer(markerLayer);
+        }
+
+        var marker = new ol.Feature({
+            geometry: new ol.geom.Point(coordinate)
+        });
+        var markerStyle = new ol.style.Style({
+            image: new ol.style.Icon({
+                src: '{% static "MapApp/images/crosshair.png" %}', // Correct the path to the marker icon
+                scale: 0.05
+            })
+        });
+        marker.setStyle(markerStyle);
+        var vectorSource = new ol.source.Vector({
+            features: [marker]
+        });
+        markerLayer = new ol.layer.Vector({
+            source: vectorSource
+        });
+        map.addLayer(markerLayer);
+    }
+
+    var isFormOpen = false; // Flag to track the form state
+
+    // Enable map click functionality when the form is shown
+    function toggleForm() {
+        var form = document.getElementById("operationForm");
+        if (form.style.display === "none") {
+            form.style.display = "block";
+            enableMapClick();
+            isFormOpen = true; // Set the flag to true when the form is open
+        } else {
+            form.style.display = "none";
+            disableMapClick();
+            isFormOpen = false; // Set the flag to false when the form is closed
+        }
+    }
+
+    function editOperation(id, operation_type, uas, number_of_drones, rpic, latitude, longitude, radius, start_datetime, end_datetime, request_state, activation_state) {
+        document.getElementById("operation_id").value = id;
+        document.getElementById("operation_type").value = operation_type;
+        document.getElementById("uas").value = uas;
+        document.getElementById("number_of_drones").value = number_of_drones;
+        document.getElementById("rpic").value = rpic;
+        document.getElementById("location").value = latitude + ", " + longitude; // Combine latitude and longitude
+        document.getElementById("latitude").value = latitude;
+        document.getElementById("longitude").value = longitude;
+        document.getElementById("radius").value = radius;
+        document.getElementById("start_datetime").value = start_datetime;
+        document.getElementById("end_datetime").value = end_datetime;
+        document.getElementById("request_state").value = request_state;
+        toggleForm();
+    }
+
+    document.querySelector('form').addEventListener('submit', function(event) {
+        setRadiusBasedOnOperationType();
+        var location = document.getElementById("location").value;
+        var coords = location.split(",");
+        if (coords.length === 2) {
+            var latitude = coords[0].trim();
+            var longitude = coords[1].trim();
+            document.getElementById("latitude").value = latitude;
+            document.getElementById("longitude").value = longitude;
+        } else {
+            event.preventDefault();
+            alert("Please enter valid GPS coordinates in the format 'latitude, longitude'.");
+        }
+    });
+
+    function toggleFilterDropdown() {
+        var filterContainer = document.querySelector(".filter-container");
+        if (filterContainer.style.display === "none" || filterContainer.style.display === "") {
+            filterContainer.style.display = "block";
+        } else {
+            filterContainer.style.display = "none";
+        }
+    }
+
+    function applyFilter() {
+        var filterInactive = document.getElementById("filter-inactive").checked;
+        var filterActive = document.getElementById("filter-active").checked;
+        var filterExpired = document.getElementById("filter-expired").checked;
+        var filterRequested = document.getElementById("filter-requested").checked;
+        var filterDeclined = document.getElementById("filter-declined").checked;
+        var showHistory = document.getElementById("show-history").checked;
+        var currentTime = new Date();
+
+        // Filter table rows
+        var rows = document.querySelectorAll(".operation-row");
+        rows.forEach(function(row) {
+            var activationState = row.getAttribute("data-activation-state");
+            var requestState = row.getAttribute("data-request-state");
+            var endTimeStr = row.querySelector('td:nth-child(3)').textContent.split('End: ')[1].trim();
+            var endTimeParts = endTimeStr.split(' - ');
+            var endDate = endTimeParts[0].trim().split('/');
+            var endTime = endTimeParts[1].trim().split(':');
+
+            var year = parseInt(endDate[2], 10) + 2000; // Assuming the year is in YY format
+            var month = parseInt(endDate[1], 10) - 1; // Months are zero-indexed
+            var day = parseInt(endDate[0], 10);
+            var hours = parseInt(endTime[0], 10);
+            var minutes = parseInt(endTime[1], 10);
+            var seconds = 0;
+
+            var endDateTime = new Date(year, month, day, hours, minutes, seconds);
+        
+            var showRow = (showHistory || endDateTime > currentTime) &&
+                ((filterInactive && activationState === "inactive" && requestState === "approved") ||
+                (filterActive && activationState === "active" && requestState === "approved") ||
+                (filterExpired && activationState === "expired" && requestState === "approved") ||
+                (filterRequested && requestState === "requested") ||
+                (filterDeclined && requestState === "declined") ||
+                (!filterInactive && !filterActive && !filterExpired && !filterRequested && !filterDeclined));
+
+            row.style.display = showRow ? "" : "none";
+        });
+
+        // Filter map features
+        var features = vectorLayer.getSource().getFeatures();
+        features.forEach(function(feature) {
+            var activationState = feature.get('activation_state');
+            var requestState = feature.get('request_state');
+            var endTime = new Date(feature.get('end_datetime'));
+
+            var showFeature = (showHistory || endTime > currentTime) &&
+                ((filterInactive && activationState === "inactive" && requestState === "approved") ||
+                (filterActive && activationState === "active" && requestState === "approved") ||
+                (filterExpired && activationState === "expired" && requestState === "approved") ||
+                (filterRequested && requestState === "requested") ||
+                (filterDeclined && requestState === "declined") ||
+                (!filterInactive && !filterActive && !filterExpired && !filterRequested && !filterDeclined));
+
+            feature.setStyle(showFeature ? feature.get('originalStyle') : new ol.style.Style(null));
+        });
+    }
+
+    document.getElementById('start_datetime').addEventListener('change', function() {
+        var startDateTime = new Date(document.getElementById('start_datetime').value);
+        document.getElementById('end_datetime').setAttribute('min', startDateTime);
+        var endDateTime = new Date(document.getElementById('end_datetime').value);
+        if (startDateTime >= endDateTime) {
+            document.getElementById('end_datetime_error').style.display = 'block';
+            startDateTime.setMinutes(startDateTime.getMinutes() + 1);
+            document.getElementById('end_datetime').value = startDateTime.getFullYear() + '-' +
+                ('0' + (startDateTime.getMonth() + 1)).slice(-2) + '-' +
+                ('0' + startDateTime.getDate()).slice(-2) + 'T' +
+                ('0' + startDateTime.getHours()).slice(-2) + ':' +
+                ('0' + startDateTime.getMinutes()).slice(-2);
+        } else {
+            document.getElementById('end_datetime_error').style.display = 'none';
+        }
+        document.getElementById('end_datetime').setAttribute('min', document.getElementById('start_datetime').value);
+    });
+
+    document.getElementById('end_datetime').addEventListener('change', function() {
+        var startDateTime = new Date(document.getElementById('start_datetime').value);
+        var endDateTime = new Date(document.getElementById('end_datetime').value);
+        if (endDateTime <= startDateTime) {
+            document.getElementById('end_datetime_error').style.display = 'block';
+            startDateTime.setMinutes(startDateTime.getMinutes() + 1);
+            document.getElementById('end_datetime').value = startDateTime.getFullYear() + '-' +
+                ('0' + (startDateTime.getMonth() + 1)).slice(-2) + '-' +
+                ('0' + startDateTime.getDate()).slice(-2) + 'T' +
+                ('0' + startDateTime.getHours()).slice(-2) + ':' +
+                ('0' + startDateTime.getMinutes()).slice(-2);
+        } else {
+            document.getElementById('end_datetime_error').style.display = 'none';
+        }
+    });
+
+    function confirmDelete(id) {
+        var popup = document.getElementById("deleteConfirmation");
+        document.getElementById("operation_id").value = id;
+        popup.style.display = "block";
+    }
+
+    function closePopup() {
+        var popup = document.getElementById("deleteConfirmation");
+        popup.style.display = "none";
+    }
+
+    function deleteOperation() {
+        var operationId = document.getElementById("operation_id").value;
+        if (operationId) {
+            fetch("{% url 'utm' %}", {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({ operation_id: operationId })
+            }).then(response => {
+                if (response.ok) {
+                    window.location.reload();
+                } else {
+                    alert("Failed to delete operation.");
+                }
+            });
+        }
+    }
+
+    function updateOperationsTable(operations) {
+        operations.forEach(function(operation) {
+            var row = document.querySelector(`tr[data-operation-id="${operation.operation_id}"]`);
+            if (row) {
+                var statusCell = row.querySelector('.status-badge');
+                if (operation.request_state === 'approved') {
+                    statusCell.className = `status-badge status-${operation.activation_state}`;
+                    statusCell.innerHTML = `
+                        <span class="status-circle"></span>
+                        ${operation.activation_state}
+                    `;
+                } else {
+                    statusCell.className = `status-badge status-${operation.request_state}`;
+                    statusCell.innerHTML = `
+                        <span class="status-circle"></span>
+                        ${operation.request_state}
+                    `;
+                }
+            }
+        });
+    }
+
+    function fetchUpdatedOperations() {
+        fetch("{% url 'utm_map_view' %}")
+            .then(response => response.json())
+            .then(data => {
+                clearUTMOperationsFromMap(); // Clear the map before adding new operations
+                addUTMOperationsToMap(data.operations); // Update the map with the new data
+                updateOperationsTable(data.operations); // Update the table with the new data
+                applyFilter(); // Reapply the filter after updating the map
+            })
+            .catch(error => {
+                console.error('Error fetching updated UTM operations:', error);
+            });
+    }
+
+    // Function to set the radius based on the selected operation type
+    function setRadiusBasedOnOperationType() {
+        var operationType = document.getElementById('operation_type').value;
+        var radiusInput = document.getElementById('radius');
+        switch (operationType) {
+            case 'VLOS':
+            case 'NIGHT_VLOS':
+                radiusInput.value = 0.5;
+                break;
+            case 'BVLOS_NO_VO':
+                radiusInput.value = 1;
+                break;
+            case 'BVLOS_VO':
+                radiusInput.value = 2;
+                break;
+            case 'NIGHT_BVLOS':
+                radiusInput.value = 5;
+                break;
+            default:
+                radiusInput.value = '';
+                break;
+        }
+    }
+
+    // Function to show or hide the radius input based on the selected operation type
+    function toggleRadiusInput() {
+        var operationType = document.getElementById('operation_type').value;
+        var radiusInputGroup = document.getElementById('radius-input-group');
+        var radiusInput = document.getElementById('radius');
+
+        if (operationType === 'NIGHT_BVLOS') {
+            radiusInputGroup.style.display = 'block';
+            radiusInput.max = 5;
+        } else {
+            radiusInputGroup.style.display = 'none';
+            radiusInput.value = ''; // Clear the radius value when hidden
+        }
+    }
+
+
+    document.getElementById('operation_type').addEventListener('change', function() {
+        setRadiusBasedOnOperationType();
+        toggleRadiusInput();
+    });
+    
+    // Call the function initially to set the visibility of the radius input based on the default selected operation type
+    toggleRadiusInput();
+
+    // Call the function initially to set the radius based on the default selected operation type
+    setRadiusBasedOnOperationType();
+
+    // Periodically check and update activation states every (minute: 60000)
+    setInterval(fetchUpdatedOperations, 1000);
+
+    // Initial call to update activation states
+    fetchUpdatedOperations();
+</script>
+{% endblock %}

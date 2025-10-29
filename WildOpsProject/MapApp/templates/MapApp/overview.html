@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'MapApp/css/utm.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div id="map" class="utm-map">
+        {% include 'MapApp/utm_map.html' %}
+    </div>
+    <div class="legend-box">
+        <div class="legend-item">
+            <div class="legend-circle inactive"></div>
+            <div>Inactive</div>
+        </div>
+        <div class="legend-item">
+            <div class="legend-circle active"></div>
+            <div>Active</div>
+        </div>
+    </div>
+</div>
+
+<!-- Confirmation popup -->
+<div id="deleteConfirmation" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closePopup()">&times;</span>
+        <p>Are you sure you want to delete this operation?</p>
+        <button class="btn btn-secondary" onclick="closePopup()">Cancel</button>
+        <button class="btn btn-danger" onclick="deleteOperation()">Delete</button>
+    </div>
+</div>
+
+<script>
+
+    var isFormOpen = false; // Flag to track the form state
+
+    function toggleFilterDropdown() {
+        var dropdown = document.getElementById("filterDropdown");
+        if (dropdown.style.display === "none") {
+            dropdown.style.display = "block";
+        } else {
+            dropdown.style.display = "none";
+        }
+    }
+
+    var filterInactive = true, filterActive = true, filterExpired = false, filterRequested = false, filterDeclined = false;
+
+
+    function applyFilter() {
+        // Filter map features
+        var features = vectorLayer.getSource().getFeatures();
+        features.forEach(function(feature) {
+            var activationState = feature.get('activation_state');
+            var requestState = feature.get('request_state');
+            if ((filterInactive && activationState === "inactive" && requestState === "approved") ||
+                (filterActive && activationState === "active" && requestState === "approved") ||
+                (filterExpired && activationState === "expired" && requestState === "approved") ||
+                (filterRequested && requestState === "requested") ||
+                (filterDeclined && requestState === "declined") ||
+                (!filterInactive && !filterActive && !filterExpired && !filterRequested && !filterDeclined)) {
+                feature.setStyle(feature.get('originalStyle')); // Show feature with original style
+            } else {
+                feature.setStyle(new ol.style.Style(null)); // Hide feature
+            }
+        });
+    }
+
+    function fetchUpdatedOperations() {
+        fetch("{% url 'utm_map_view' %}")
+            .then(response => response.json())
+            .then(data => {
+                clearUTMOperationsFromMap(); // Clear the map before adding new operations
+                addUTMOperationsToMap(data.operations); // Update the map with the new data
+                applyFilter(); // Reapply the filter after updating the map
+            })
+            .catch(error => {
+                console.error('Error fetching updated UTM operations:', error);
+            });
+    }
+
+    // Periodically check and update activation states every (minute: 60000)
+    setInterval(fetchUpdatedOperations, 1000);
+
+    // Initial call to update activation states
+    fetchUpdatedOperations();
+</script>
+{% endblock %}

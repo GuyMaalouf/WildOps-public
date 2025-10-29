@@ -1,0 +1,419 @@
+[
+    {
+        "checklist_entry": "Check area",
+        "procedure_description": "Ensure no-fly zones and NOTAMs are checked. Assess topography for ground obstacles and airspace visibility.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Notify third parties",
+        "procedure_description": "Inform ATC of planned locations, heights, and times. Notify Ol Pejeta comms room.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Weather checks",
+        "procedure_description": "Check temperature (-10° to 40° C), wind (Mini 4P < 10.7 m/s, Mavic 3E < 12 m/s), rain (up to light drizzle), visibility (more than 5km), and Kp-index (max 5).",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Pilot certification",
+        "procedure_description": "Ensure the pilot has a valid drone certificate.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Book pilot assistant",
+        "procedure_description": "Book a pilot assistant for situational awareness (air, ground, wildlife).",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Ensure operational limits",
+        "procedure_description": "Ensure operations are within 2 km from the pilot and within flight geography.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Check drone and equipment",
+        "procedure_description": "Perform visual inspection of the drone (cracked propellers, smooth motors) and transmitter. Ensure SD-cards are empty and ready for logging. Check batteries (drone, transmitter, VHF) and test comms channels (VHF 124.3 MHz, ground team comms).",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Pack equipment",
+        "procedure_description": "Ensure all items on the equipment list are packed.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Inform ATC",
+        "procedure_description": "Inform ATC of planned locations, heights, and times.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Inform Radio Room",
+        "procedure_description": "Inform Radio Room of planned locations and times.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Go through packing checklist",
+        "procedure_description": "Ensure all items on the packing checklist are packed.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "IMSAFE check",
+        "procedure_description": "Ensure the pilot is not suffering from Illness, Medication, Stress, Alcohol, Fatigue, or Emotion.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Assign crew roles",
+        "procedure_description": "Assign roles to the crew and ensure they are wearing safety vests.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Assign evacuation car seats",
+        "procedure_description": "Ensure assigned evacuation car seats are free of clutter.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Review checklists",
+        "procedure_description": "Review in-flight checklist, contingency, and emergency procedures.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Ask ATC for permission",
+        "procedure_description": "Share planned location and height with ATC and get approval.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Approval from Ol Pejeta comms room",
+        "procedure_description": "Get approval from Ol Pejeta comms room.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Check GoPro battery and storage",
+        "procedure_description": "Ensure GoPro battery is charged and storage is sufficient, then start recording.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "VMC check",
+        "procedure_description": "Check visibility and clouds.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Insert SD card",
+        "procedure_description": "Insert SD card into the drone.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Inspect Motors, Propellers, Batteries",
+        "procedure_description": "Inspect the motors, propellers, and batteries for any issues.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Power on the drone",
+        "procedure_description": "Power on the drone and ensure it is functioning correctly.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Check safety features and fail-safes",
+        "procedure_description": "Ensure safety features and fail-safes (RTL, radio audio feedback) are enabled.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Calibrate drone and get GPS Fix",
+        "procedure_description": "Ensure the drone is calibrated and has a GPS fix.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Establish telemetry link",
+        "procedure_description": "Ensure the telemetry link is established (RSSI signal).",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Check airspace and ground area",
+        "procedure_description": "Ensure the airspace and ground area are clear before take-off.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Test comms channels",
+        "procedure_description": "Test communication channels (VHF 124.3 MHz, ground team comms).",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Advise crew before take-off",
+        "procedure_description": "Advise the crew before take-off and request go/no-go.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Arm drone and check motors",
+        "procedure_description": "Arm the drone and ensure the motors are rotating smoothly.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Check flight performance",
+        "procedure_description": "Monitor the drone's flight performance, especially in windy conditions.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Upload waypoint mission",
+        "procedure_description": "Upload the waypoint mission to the drone.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Start recording",
+        "procedure_description": "Start recording the flight.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Monitor flight",
+        "procedure_description": "Continuously monitor weather, drone (battery, RSSI, GPS, altitude, speed, distance), transmitter (battery), and air traffic on frequency 124.3 MHz and FlightRadar24.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Advise before landing",
+        "procedure_description": "Advise everyone in the operational volume before landing.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Stop on-board recording",
+        "procedure_description": "Stop the on-board recording after landing.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Stop GoPro recording",
+        "procedure_description": "Stop the GoPro recording after landing.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Remove batteries",
+        "procedure_description": "Remove the batteries from the drone.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Visual inspection of drone and equipment",
+        "procedure_description": "Perform a visual inspection of the drone and equipment after landing.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Inform ATC and Ol Pejeta comms room",
+        "procedure_description": "Inform ATC and Ol Pejeta comms room after the operation.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Empty SD cards",
+        "procedure_description": "Empty the SD cards after the operation.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Recharge/Storage charge batteries",
+        "procedure_description": "Recharge or storage charge the batteries after the operation.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Document the flight",
+        "procedure_description": "Document the flight in the Drone Logbook and KFL flight logs.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Record and report incidents/accidents",
+        "procedure_description": "Record and report any incidents or accidents.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Low battery/high drain",
+        "procedure_description": "Check if there is sufficient battery to RTH. If yes, RTH. If no, perform a slow landing. If the drone is close to home, perform a manual landing.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "High-wind carries UAS",
+        "procedure_description": "If the drone has exited the flight geometry, follow Emergency E03. If able to RTH, RTH. If not, perform a slow landing.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Aircraft approaching",
+        "procedure_description": "Lower the drone to a safe altitude (below 30m AGL).",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Wildlife approaching",
+        "procedure_description": "RTH and get in the car. Control the drone and move away.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "UAV warnings or errors",
+        "procedure_description": "If able to RTH, RTH. If not, perform a slow landing.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "C2 link warnings or errors",
+        "procedure_description": "Orient the antenna towards the UAS and RTH. Consider driving towards the UAS.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Poor Weather",
+        "procedure_description": "RTH in case of rain, wind, or poor visibility.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Crew feeling unwell",
+        "procedure_description": "RTH if any crew member feels unwell.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "3rd party approaching",
+        "procedure_description": "Assistant communicates with the third party and avoids distracting the RPIC.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Flight geography breached",
+        "procedure_description": "If the UAV is under control, RTH. If not, follow Emergency E04.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Aircraft dangerously close",
+        "procedure_description": "AP shouts 'Kill Kill Kill' and activates the kill switch.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Threatening Wildlife",
+        "procedure_description": "Get in the car ASAP and manually RTH.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Operational Volume Breached",
+        "procedure_description": "Activate the kill switch and communicate with ATC.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Loss of control/fly-away",
+        "procedure_description": "Try switching flight modes and regaining control. If unsuccessful, activate the kill switch and communicate with ATC.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Bush fire",
+        "procedure_description": "Call the radio room.",
+        "operation_types": ["ALL"],
+        "drone_platforms": ["ALL"],
+        "number_of_drones": ["ALL"]
+    },
+    {
+        "checklist_entry": "Crew unfit for flight",
+        "procedure_description": "RTH, provide first aid, and call the radio room."
+    },
+    {
+        "checklist_entry": "unusued_procedures_check",
+        "procedure_description": "Entry specifically for testing the unused procedures code.",
+        "operation_types": [],
+        "drone_platforms": [],
+        "number_of_drones": []
+    }
+]

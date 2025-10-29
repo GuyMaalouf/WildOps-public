@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<Document>
+    <name>Patrol Block - [Block Name]</name>
+    <open>1</open>
+    <Schema name="Patrol_Blocks" id="S_Patrol_Blocks_IIDDSSDD">
+        <SimpleField type="int" name="OBJECTID"><displayName>&lt;b&gt;OBJECTID&lt;/b&gt;</displayName></SimpleField>
+        <SimpleField type="int" name="ID"><displayName>&lt;b&gt;ID&lt;/b&gt;</displayName></SimpleField>
+        <SimpleField type="double" name="Shape_Leng"><displayName>&lt;b&gt;Shape_Leng&lt;/b&gt;</displayName></SimpleField>
+        <SimpleField type="double" name="Shape_Area"><displayName>&lt;b&gt;Shape_Area&lt;/b&gt;</displayName></SimpleField>
+        <SimpleField type="string" name="Block"><displayName>&lt;b&gt;Block&lt;/b&gt;</displayName></SimpleField>
+        <SimpleField type="string" name="Sector"><displayName>&lt;b&gt;Sector&lt;/b&gt;</displayName></SimpleField>
+        <SimpleField type="double" name="Random"><displayName>&lt;b&gt;Random&lt;/b&gt;</displayName></SimpleField>
+        <SimpleField type="double" name="Acres"><displayName>&lt;b&gt;Acres&lt;/b&gt;</displayName></SimpleField>
+    </Schema>
+
+    <Style id="green_style">
+        <LineStyle>
+            <color>ff00aa55</color>
+            <width>2.5</width>
+        </LineStyle>
+        <PolyStyle>
+            <color>0900aa55</color>
+        </PolyStyle>
+    </Style>
+
+    <Style id="black_style">
+        <LineStyle>
+            <color>ff000000</color>
+            <width>2.0</width>
+        </LineStyle>
+        <PolyStyle>
+            <color>00000000</color>
+        </PolyStyle>
+    </Style>
+
+    <Folder id="layer_0">
+        <name>Patrol_Blocks</name>
+        <Placemark>
+			<name>A</name>
+			<styleUrl>#black_style</styleUrl>
+			<ExtendedData>
+				<SchemaData schemaUrl="#S_Patrol_Blocks_IIDDSSDD">
+					<SimpleData name="OBJECTID">23</SimpleData>
+					<SimpleData name="ID">1</SimpleData>
+					<SimpleData name="Shape_Leng">17494.3</SimpleData>
+					<SimpleData name="Shape_Area">10.7582</SimpleData>
+					<SimpleData name="Block">A</SimpleData>
+					<SimpleData name="Sector">Northern</SimpleData>
+					<SimpleData name="Random">35</SimpleData>
+					<SimpleData name="Acres">2658.42</SimpleData>
+				</SchemaData>
+			</ExtendedData>
+			<Polygon>
+				<outerBoundaryIs>
+					<LinearRing>
+						<coordinates>
+							36.90242665943821,0.02753842452330346,0 36.90666997793642,0.02587142244228957,0 36.91174124297888,0.02628828178281584,0 36.91319017480412,0.02649668944030736,0 36.91360414624613,0.02733023877210528,0 36.9133971470005,0.02795539406020175,0 36.91329363270149,0.02858055107579638,0 36.91329361743358,0.02941409321918442,0 36.91205167716816,0.0295182613796019,0 36.91143068610651,0.03045599133896459,0 36.91101667018552,0.03201887362779043,0 36.91091315256136,0.03316499585339638,0 36.90967118714861,0.03410270104908797,0 36.90811876119606,0.03410266708313792,0 36.90708382541527,0.03316491437832969,0 36.90666980789084,0.03472779157059236,0 36.90666978697593,0.03566553040893261,0 36.90604882049674,0.03545712483433494,0 36.90542786579775,0.03472776386199694,0 36.90480687888962,0.03545709653549167,0 36.90366841698263,0.03649899860367345,0 36.90263343468301,0.03774928348058371,0 36.90304739478457,0.03868702114877998,0 36.90315086496379,0.03962476044103713,0 36.90170190142072,0.04108341364470025,0 36.90128788016277,0.04254209245735829,0 36.90149482390407,0.04410498797328355,0 36.90211572745292,0.04639723230255299,0 36.90159822618944,0.04754333433463209,0 36.90294362067434,0.04879368492833436,0 36.90304709468003,0.04941884293105936,0 36.90190858188067,0.05150265136290688,0 36.90035606511928,0.05441997764229711,0 36.90035597663786,0.05692059231986235,0 36.90170137429462,0.05785837747471323,0 36.90211527405265,0.05983804691293226,0 36.90263269429119,0.06129675785816691,0 36.90221869103966,0.06181770504919193,0 36.90159767661059,0.06317217952924725,0 36.90387452270264,0.06411000018645918,0 36.90459892257054,0.06567292300718286,0 36.90387438354296,0.06744415761432698,0 36.90242541109706,0.06848602192619069,0 36.90242532842286,0.07036148542341358,0 36.903046184826,0.07286212348946997,0 36.9031495557475,0.07546693845519314,0 36.90361521271616,0.07697775752955938,0 36.90413263982113,0.07781132037778526,0 36.90433956862394,0.07916583230448637,0 36.89699147135508,0.07833192422409763,0 36.88498669238759,0.0666619026283799,0 36.8848325755726,0.0306638484003674,0 36.90242665943821,0.02753842452330346,0 
+						</coordinates>
+					</LinearRing>
+				</outerBoundaryIs>
+			</Polygon>
+		</Placemark>
+    </Folder>
+</Document>
+</kml>

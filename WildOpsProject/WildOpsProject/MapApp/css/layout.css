@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 25%; /* 1/4 of the page */
+    background-color: var(--light-neutral);
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}

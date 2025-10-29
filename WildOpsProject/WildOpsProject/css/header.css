@@ -1,0 +1,48 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: var(--light-neutral);
+    z-index: 3000; /* Ensure the header is in front of the map options banner */
+    position: relative;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px; /* Adjust the height as needed */
+    margin-right: 10px;
+}
+
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+    margin-left: 20px; /* Add margin to the left */
+}
+
+.nav-left a, .nav-right a {
+    color: var(--light-neutral);
+    text-decoration: none;
+    margin-left: 25px;
+    margin-right: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.nav-left a:hover, .nav-right a:hover {
+    color: var(--light-neutral-fade); /* Change to a darker color on hover */
+}
+
+.nav-left a:first-child, .nav-right a:first-child {
+    margin-left: 20px;
+}
+
+.nav-right {
+    margin-left: auto;
+}

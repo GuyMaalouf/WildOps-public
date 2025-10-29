@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Flight Cylinders{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="sidebar">
+        <h1>Flight Cylinders</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="latitude">Latitude:</label>
+            <input type="text" id="latitude" name="latitude" value="{{ latitude }}" required><br>
+            <label for="longitude">Longitude:</label>
+            <input type="text" id="longitude" name="longitude" value="{{ longitude }}" required><br>
+            <label for="radius">Radius (km):</label>
+            <input type="text" id="radius" name="radius" value="{{ radius }}" required><br>
+            <button type="submit">Draw Cylinder</button>
+        </form>
+    </div>
+    <div id="map" class="flight-cylinders">
+        {% include 'MapApp/map_options.html' %}
+    </div>
+</div>
+<script>
+    {% if latitude and longitude and radius %}
+    var center = ol.proj.fromLonLat([{{ longitude }}, {{ latitude }}]);
+    var radius = {{ radius }} * 1000; // Convert km to meters
+
+    var circle = new ol.geom.Circle(center, radius);
+    var circleFeature = new ol.Feature(circle);
+
+    var vectorSource = new ol.source.Vector({
+        features: [circleFeature]
+    });
+
+    var vectorLayer = new ol.layer.Vector({
+        source: vectorSource
+    });
+
+    map.addLayer(vectorLayer);
+    map.getView().setCenter(center);
+    map.getView().setZoom(12);
+    {% endif %}
+</script>
+{% endblock %}

@@ -1,0 +1,70 @@
+#map {
+    width: 100%; /* Full width for index and olpejeta views */
+    height: calc(100vh - 60px); /* Full height minus header height */
+    position: relative; /* Add relative positioning */
+}
+
+#map.flight-cylinders {
+    width: 75%; /* 3/4 of the page for flight cylinders view */
+    height: 100%;
+}
+
+.open-btn {
+    position: absolute; /* Change to absolute positioning */
+    top: 10px; /* Adjust the top position */
+    right: 10px; /* Adjust the right position */
+    font-size: 20px;
+    cursor: pointer;
+    background-color: var(--light-neutral);
+    padding: 5px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    z-index: 1000; /* Ensure it is above other elements */
+    display: block; /* Initially hidden */
+}
+
+/* Style for the side window */
+#map-options {
+    height: 100%; /* Match the height of the map container */
+    width: 250px;
+    position: absolute; /* Change to absolute positioning */
+    top: 0;
+    right: 0;
+    background-color: rgba(179, 185, 162, 0.9); /* Use secondary color with transparency */
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding: 20px; /* Buffer space */
+    z-index: 2000; /* Ensure it is above the map */
+}
+
+#map-options.collapsed {
+    width: 0;
+    padding: 0;
+}
+
+#map-options .close-btn {
+    position: absolute;
+    top: 20px; /* Push the close button lower */
+    right: 25px;
+    font-size: 36px;
+    color: var(--dark-neutral); /* Dark neutral close button */
+    cursor: pointer;
+}
+
+#map-options .title {
+    font-size: 24px;
+    color: var(--dark-neutral); /* Dark neutral color for the title */
+    margin-bottom: 20px;
+    text-align: center; /* Center the title */
+    margin-top: 20px; /* Push the title lower */
+}
+
+#layer-select {
+    background-color: var(--secondary-color); /* Secondary color background */
+    color: var (--dark-neutral); /* Dark neutral color for text */
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 20px; /* Push the content lower */
+}

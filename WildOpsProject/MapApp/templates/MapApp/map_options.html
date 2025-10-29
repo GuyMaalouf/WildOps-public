@@ -1,0 +1,69 @@
+<!-- MapApp/templates/MapApp/map_options.html -->
+<div id="map-options" class="collapsed">
+    <span class="close-btn" onclick="toggleMapOptions()">&times;</span>
+    <div class="title">Map Options</div>
+    <label for="layer-select">Background Layer:</label>
+    <select id="layer-select">
+        <option value="osm">Standard</option>
+        <option value="aerial">Aerial</option>
+        <option value="terrain">Terrain</option>
+    </select>
+    <!-- <div id="layer-control">
+        <h3>Toggle Layers</h3>
+    </div> -->
+</div>
+<span class="open-btn" id="map-options-btn" onclick="toggleMapOptions()">&#9776; </span>
+
+<script>
+    function toggleMapOptions() {
+        var mapOptions = document.getElementById("map-options");
+        var mapOptionsBtn = document.getElementById("map-options-btn");
+        if (mapOptions.classList.contains("collapsed")) {
+            mapOptions.classList.remove("collapsed");
+            mapOptionsBtn.style.display = "none"; // Hide the button
+        } else {
+            mapOptions.classList.add("collapsed");
+            mapOptionsBtn.style.display = "block"; // Show the button
+        }
+    }
+
+    var osmLayer = new ol.layer.Tile({
+        source: new ol.source.OSM()
+    });
+
+    var aerialLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}'
+        })
+    });
+
+    var terrainLayer = new ol.layer.Tile({
+        source: new ol.source.XYZ({
+            url: 'https://{a-c}.tile.opentopomap.org/{z}/{x}/{y}.png'
+        })
+    });
+
+    var mapLayers = {
+        'osm': osmLayer,
+        'aerial': aerialLayer,
+        'terrain': terrainLayer
+    };
+
+    var map = new ol.Map({
+        target: 'map',
+        layers: [osmLayer],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([36.8569, 0.0174]), // Coordinates for Ol Pejeta Conservancy
+            zoom: 12, // Specific zoom level
+            minZoom: 2 // Set minimum zoom level
+        })
+    });
+
+    document.getElementById('layer-select').addEventListener('change', function() {
+        var selectedLayer = this.value;
+        map.getLayers().setAt(0, mapLayers[selectedLayer]);
+    });
+</script>
+
+<!-- Include the KML layer script -->
+<!-- {%include 'MapApp/kml_layer.html' % } - to add kml_layer delete the space between the % and the }  -->

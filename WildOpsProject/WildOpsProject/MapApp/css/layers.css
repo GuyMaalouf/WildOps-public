@@ -1,0 +1,36 @@
+.layer-group {
+    margin-bottom: 10px;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+}
+
+.expand-button {
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.layer-icon {
+    width: 18px; /* Make the icon smaller */
+    height: 18px; /* Make the icon smaller */
+    cursor: pointer;
+    margin-right: 5px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    color: var(--dark-neutral); /* Set the icon color */
+    position: relative; /* Ensure the element is positioned */
+    z-index: 1000; /* Bring the icons forward */
+    filter: invert(15%) sepia(20%) saturate(500%) hue-rotate(300deg); /* Change color */
+}
+
+.layers-container {
+    display: none;
+    margin-left: 20px;
+}
+
+.layer-group.expanded .layers-container {
+    display: block;
+}

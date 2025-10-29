@@ -1,0 +1,24 @@
+{
+    "Packing Checklist": {
+        "color": [255, 165, 0],
+        "items": [
+            {"section": "UAS operation"},
+            {"checklist_entry": "UAS & UAS controller"},
+            {"checklist_entry": "UAS batteries (charged)"},
+            {"checklist_entry": "SD Cards for UAS (empty sd cards)"},
+            {"checklist_entry": "GoPro (camera + battery / spare batteries + empty sd card)"},
+            {"checklist_entry": "Safety Vest"},
+            {"checklist_entry": "Landing Matt"},
+            {"section": "Personal"},
+            {"checklist_entry": "Water"},
+            {"checklist_entry": "hat + sunglasses"},
+            {"checklist_entry": "sunscreen + mosquito repellent"},
+            {"checklist_entry": "charged phone + power bank"},
+            {"section": "car"},
+            {"checklist_entry": "reserve water"},
+            {"checklist_entry": "OPC letter"},
+            {"checklist_entry": "First aid kit + snake bite kit"},
+            {"checklist_entry": "Binoculars"}
+        ]
+    }
+}

@@ -1,0 +1,1 @@
+# MapApp/view__init__.py

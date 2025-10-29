@@ -1,0 +1,119 @@
+{
+    "Operation Planning": {
+        "color": [255, 0, 0],
+        "items": [
+            {"section": "Operational Environment"},
+            {"checklist_entry": "Check area"},
+            {"checklist_entry": "Notify third parties"},
+            {"checklist_entry": "Weather checks"},
+            {"section": "Crew"},
+            {"checklist_entry": "Pilot certification"},
+            {"checklist_entry": "Book pilot assistant"},
+            {"section": "Regulations"},
+            {"checklist_entry": "Ensure operational limits"},
+            {"section": "Equipment"},
+            {"checklist_entry": "Check drone and equipment"},
+            {"checklist_entry": "Pack equipment"}
+        ]
+    },
+    "Pre-Operation": {
+        "color": [255, 165, 0],
+        "items": [
+            {"section": "3rd parties"},
+            {"checklist_entry": "Inform ATC"},
+            {"checklist_entry": "Inform Radio Room"},
+            {"section": "Packing"},
+            {"checklist_entry": "Go through packing checklist"}
+        ]
+    },
+    "Pre-Flight (First Flight)": {
+        "color": [255, 255, 0],
+        "items": [
+            {"section": "Operational Environment"},
+            {"checklist_entry": "Check area"},
+            {"checklist_entry": "Weather checks"},
+            {"section": "Safety Briefing"},
+            {"checklist_entry": "IMSAFE check"},
+            {"checklist_entry": "Assign crew roles"},
+            {"checklist_entry": "Assign evacuation car seats"},
+            {"checklist_entry": "Review checklists"},
+            {"section": "Regulations"},
+            {"checklist_entry": "Ask ATC for permission"},
+            {"checklist_entry": "Approval from Ol Pejeta comms room"}
+        ]
+    },
+    "Pre-Flight (All Flights)": {
+        "color": [0, 255, 0],
+        "items": [
+            {"checklist_entry": "Check GoPro battery and storage"},
+            {"checklist_entry": "VMC check"},
+            {"section": "Equipment"},
+            {"checklist_entry": "Insert SD card"},
+            {"checklist_entry": "Inspect Motors, Propellers, Batteries"},
+            {"checklist_entry": "Power on the drone"},
+            {"checklist_entry": "Check safety features and fail-safes"},
+            {"checklist_entry": "Calibrate drone and get GPS Fix"},
+            {"checklist_entry": "Establish telemetry link"},
+            {"section": "Pre-take-off"},
+            {"checklist_entry": "Check airspace and ground area"},
+            {"checklist_entry": "Test comms channels"},
+            {"checklist_entry": "Advise crew before take-off"},
+            {"checklist_entry": "Arm drone and check motors"}
+        ]
+    },
+    "In-Flight": {
+        "color": [0, 0, 255],
+        "items": [
+            {"checklist_entry": "Check flight performance"},
+            {"checklist_entry": "Upload waypoint mission"},
+            {"checklist_entry": "Start recording"},
+            {"checklist_entry": "Monitor flight"},
+            {"checklist_entry": "Advise before landing"}
+        ]
+    },
+    "Post-Flight": {
+        "color": [75, 0, 130],
+        "items": [
+            {"checklist_entry": "Stop on-board recording"},
+            {"checklist_entry": "Stop GoPro recording"},
+            {"checklist_entry": "Remove batteries"},
+            {"checklist_entry": "Visual inspection of drone and equipment"}
+        ]
+    },
+    "Post-Operation": {
+        "color": [238, 130, 238],
+        "items": [
+            {"checklist_entry": "Inform ATC and Ol Pejeta comms room"},
+            {"checklist_entry": "Empty SD cards"},
+            {"checklist_entry": "Recharge/Storage charge batteries"},
+            {"checklist_entry": "Document the flight"},
+            {"checklist_entry": "Record and report incidents/accidents"}
+        ]
+    },
+    "Contingency Procedures": {
+        "color": [128, 128, 128],
+        "items": [
+            {"checklist_entry": "Low battery/high drain"},
+            {"checklist_entry": "High-wind carries UAS"},
+            {"checklist_entry": "Aircraft approaching"},
+            {"checklist_entry": "Wildlife approaching"},
+            {"checklist_entry": "UAV warnings or errors"},
+            {"checklist_entry": "C2 link warnings or errors"},
+            {"checklist_entry": "Poor Weather"},
+            {"checklist_entry": "Crew feeling unwell"},
+            {"checklist_entry": "3rd party approaching"},
+            {"checklist_entry": "Flight geography breached"}
+        ]
+    },
+    "Emergency Procedures": {
+        "color": [255, 0, 0],
+        "items": [
+            {"checklist_entry": "Aircraft dangerously close"},
+            {"checklist_entry": "Threatening Wildlife"},
+            {"checklist_entry": "Operational Volume Breached"},
+            {"checklist_entry": "Loss of control/fly-away"},
+            {"checklist_entry": "Bush fire"},
+            {"checklist_entry": "Crew unfit for flight"}
+        ]
+    }
+}

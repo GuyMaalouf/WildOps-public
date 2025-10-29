@@ -1,0 +1,153 @@
+.weather-check-title {
+  margin-left: 40px; /* Adjust the value as needed */
+}
+
+.form-container {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  width: 500px; 
+  margin-left: auto;
+  margin-right: auto; 
+}
+
+.form-group-inline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.location-input {
+  width: 200px;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.btn-location, .btn-check-weather {
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-location i {
+  margin-right: 5px;
+}
+
+.btn-location:hover, .btn-check-weather:hover {
+  background-color: #0056b3;
+}
+
+.btn-disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.weather-table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+.weather-table th, .weather-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.weather-table th {
+  background-color: #f2f2f2;
+}
+
+/* Dashboard-like styling */
+.weather-table.dashboard-style {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  background-color: #fafafa;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.weather-table.dashboard-style th {
+  padding: 15px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 20px;
+  background-color: #e0e0e0;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.weather-table.dashboard-style td {
+  padding: 15px;
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 30px;
+}
+
+.highlight-reading {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+/* Weather condition icon */
+.icon {
+  display: block;
+  margin: 0 auto -50px auto;
+  width: 100px;
+  height: 100px;
+}
+
+/* Compass + arrow container */
+.compass-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+/* Background compass with NSEW letters */
+.compass-base {
+  position: absolute;
+  width: 125px;
+  height: 125px;
+  background-image: url('/static/weather_check/img/compass.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+/* Arrow overlay that rotates based on wind_deg */
+.compass-arrow {
+  position: absolute;
+  width: 85px;
+  height: 85px;
+  background-image: url('/static/weather_check/img/compass_arrow.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  transform-origin: center center;
+  top: 20px;
+  left: 20px;
+}
+
+/* Daytime styling */
+.daytime {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.daytime i {
+  margin-right: 5px;
+}

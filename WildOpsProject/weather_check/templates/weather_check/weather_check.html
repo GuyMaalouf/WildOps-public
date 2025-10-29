@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Weather Check{% endblock %}
+
+{% block content %}
+<h1 class="weather-check-title">Weather Check</h1>
+
+<!-- Location input structure -->
+<div class="form-container">
+  <div class="form-group-inline">
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" placeholder="e.g. Nairobi, Kenya" value="{{ query|default_if_none:'' }}" class="location-input" />
+    <button type="button" id="btn-my-location" class="btn-location"><i class="fas fa-location-arrow"></i> My Location</button>
+    <button type="button" id="btn-check-weather" class="btn-check-weather">Check Weather</button>
+  </div>
+
+  <!-- Hidden fields for lat/lon if user clicks "My Location" -->
+  <input type="hidden" id="lat" name="lat" />
+  <input type="hidden" id="lon" name="lon" />
+</div>
+
+<!-- Weather Table -->
+<table class="weather-table dashboard-style">
+  <thead>
+    <tr>
+      <th><i class="fas fa-cloud"></i> Condition</th>
+      <th><i class="fas fa-thermometer-half"></i> Temperature</th>
+      <th><i class="fas fa-tint"></i> Precipitation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <img src="{{ weather_info.icon }}" alt="{{ weather_info.text }}" class="icon"><br>
+        <strong>{{ weather_info.text }}</strong>
+      </td>
+      <td class="highlight-reading" style="color: {{ temp_color }};">{{ temp }}°C</td>
+      <td class="highlight-reading" style="color: {{ precipitation_color }};">{{ precipitation }}%</td>
+    </tr>
+    <tr>
+      <th><i class="fas fa-wind"></i> Wind Speed</th>
+      <th><i class="fas fa-wind"></i> Wind Gusts</th>
+      <th><i class="fas fa-compass"></i> Wind Direction</th>
+    </tr>
+    <tr>
+      <td class="highlight-reading" style="color: {{ wind_speed_color }};">{{ wind_speed }} kph</td>
+      <td class="highlight-reading" style="color: {{ wind_gust_color }};">{{ wind_gust }} kph</td>
+      <td>
+        <div class="compass-container">
+          <!-- Static compass background with NSEW -->
+          <div class="compass-base"></div>
+          <!-- Rotating arrow -->
+          <div class="compass-arrow" style="transform: rotate({{ wind_deg }}deg);"></div>
+        </div>
+        <strong>{{ wind_deg }}° ({{ wind_dir_text }})</strong>
+      </td>
+    </tr>
+    <tr>
+      <th><i class="fas fa-sun"></i> Daytime</th>
+      <th><i class="fas fa-eye"></i> Visibility</th>
+      <th><i class="fas fa-magnet"></i> Kp Index</th>
+    </tr>
+    <tr>
+      <td class="highlight-reading">
+        <div class="daytime">
+          <i class="fas fa-sun"></i> {{ sunrise }}<br>
+          <i class="fas fa-moon"></i> {{ sunset }}
+        </div>
+      </td>
+      <td class="highlight-reading" style="color: {{ visibility_color }};">{{ visibility }} km</td>
+      <td class="highlight-reading" style="color: {{ kp_index_color }};">{{ kp_index }}</td> <!-- { "kp_index" } -->
+    </tr>
+  </tbody>
+</table>
+
+<!-- Include jQuery and jQuery UI from CDN -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- Include Font Awesome for location icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!-- Include the weather_check CSS -->
+<link rel="stylesheet" href="{% static 'weather_check/css/weather_check.css' %}">
+
+<script>
+  $(function() {
+    // Autocomplete for city names
+    $("#location").autocomplete({
+      source: function(request, response) {
+        $.ajax({
+          url: "https://wft-geo-db.p.rapidapi.com/v1/geo/cities",
+          headers: {
+            "x-rapidapi-key": "{{ rapidapi_key }}",
+            "x-rapidapi-host": "wft-geo-db.p.rapidapi.com"
+          },
+          data: {
+            namePrefix: request.term,
+            limit: 10
+          },
+          success: function(data) {
+            response($.map(data.data, function(item) {
+              return {
+                label: item.city + ", " + item.country,
+                value: item.city + ", " + item.country
+              };
+            }));
+          }
+        });
+      },
+      minLength: 2,
+      select: function(event, ui) {
+        // Clear out the lat/lon fields if a city is selected
+        $("#lat").val("");
+        $("#lon").val("");
+        enableButtons();
+      }
+    });
+
+    // If the user clicks "My Location," get lat/lon via Geolocation and auto-submit
+    document.getElementById('btn-my-location').addEventListener('click', function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+          document.getElementById('lat').value = position.coords.latitude;
+          document.getElementById('lon').value = position.coords.longitude;
+          // Clear out the location text field so lat/lon take precedence
+          document.getElementById('location').value = "";
+          // Submit the form
+          document.getElementById('btn-check-weather').click();
+        }, function(error) {
+          alert("Error getting location: " + error.message);
+        });
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    });
+
+    // Handle the "Check Weather" button click
+    document.getElementById('btn-check-weather').addEventListener('click', function() {
+      const location = document.getElementById('location').value;
+      const lat = document.getElementById('lat').value;
+      const lon = document.getElementById('lon').value;
+      let query = '';
+
+      if (lat && lon) {
+        query = `lat=${lat}&lon=${lon}`;
+      } else if (location) {
+        query = `location=${encodeURIComponent(location)}`;
+      }
+
+      if (query) {
+        window.location.href = `?${query}`;
+        disableButtons();
+      } else {
+        alert("Please enter a location or use 'My Location'.");
+      }
+    });
+
+    // Enable buttons when location input changes
+    document.getElementById('location').addEventListener('input', function() {
+      enableButtons();
+    });
+
+    function disableButtons() {
+      document.getElementById('btn-check-weather').classList.add('btn-disabled');
+      document.getElementById('btn-check-weather').disabled = true;
+      document.getElementById('btn-my-location').classList.add('btn-disabled');
+      document.getElementById('btn-my-location').disabled = true;
+    }
+
+    function enableButtons() {
+      document.getElementById('btn-check-weather').classList.remove('btn-disabled');
+      document.getElementById('btn-check-weather').disabled = false;
+      document.getElementById('btn-my-location').classList.remove('btn-disabled');
+      document.getElementById('btn-my-location').disabled = false;
+    }
+  });
+</script>
+{% endblock %}

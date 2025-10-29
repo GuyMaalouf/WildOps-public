@@ -1,0 +1,497 @@
+/* MapApp/static/MapApp/css/utm.css */
+
+.container {
+    display: flex;
+}
+
+.sidebar {
+    width: 50%; /* Make the sidebar take up half of the container */
+    padding: 20px;
+}
+
+.utm-map {
+    width: 50%; /* Make the map take up the other half of the container */
+    height: 600px;
+    border: 1px solid #ccc;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.form-container {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+label, input, select {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+button[type="submit"] {
+    width: auto;
+}
+
+/* Center the modal */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 500px; /* Maximum width */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+/* Close button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Red confirm delete button */
+.btn-danger {
+    background-color: rgb(222, 0, 0);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.btn-danger:hover {
+    background-color: rgb(139, 0, 0);
+}
+
+/*ACTION BUTTONS*/
+:root {
+    --button-padding: 3px 6px;
+}
+
+/* Bin delete button */
+.btn-delete {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--button-padding); /* Adjust padding to make the button thinner */
+}
+
+.btn-delete:hover {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--button-padding); /* Adjust padding to make the button thinner */
+}
+
+.btn-delete .fa-trash-alt {
+    color: rgb(148, 148, 148);
+}
+
+.btn-delete .fa-trash-alt:hover {
+    color: rgb(73, 73, 73);
+}
+
+/* Styles for the edit button and pencil icon */
+.btn-edit {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--button-padding); /* Adjust padding to make the button thinner */
+}
+
+.btn-edit:hover {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--button-padding); /* Adjust padding to make the button thinner */
+}
+
+.btn-edit .fa-pencil-alt {
+    color: rgb(148, 148, 148);
+}
+
+.btn-edit .fa-pencil-alt:hover {
+    color: rgb(73, 73, 73);
+}
+
+/* Styles for the approve button and check icon */
+.btn-approve {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--button-padding); /* Adjust padding to make the button thinner */
+}
+
+.btn-approve:hover {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--button-padding); /* Adjust padding to make the button thinner */
+}
+
+.btn-approve .fa-check {
+    color: green;
+}
+
+.btn-approve .fa-check:hover {
+    color: darkgreen;
+    background: transparent;
+}
+
+/* Styles for the decline button and times icon */
+.btn-decline {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--button-padding); /* Adjust padding to make the button thinner */
+}
+
+.btn-decline:hover {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: var(--button-padding); /* Adjust padding to make the button thinner */
+}
+
+.btn-decline .fa-times {
+    color: red;
+}
+
+.btn-decline .fa-times:hover {
+    color: darkred;
+    background: transparent;
+}
+
+/* Styles for the compact form */
+.compact-form .form-group {
+    display: flex;
+    align-items: center !important;
+    margin-bottom: 10px !important;
+}
+
+.compact-form .form-group label {
+    width: 150px !important; /* Adjust as needed */
+    margin-right: 10px !important;
+}
+
+.compact-form .form-group input,
+.compact-form .form-group select {
+    flex: 1 !important;
+}
+
+/*UTM Pop up */
+.ol-popup {
+    position: absolute;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 200px;
+}
+
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.ol-popup:after {
+    border-color: rgba(255, 255, 255, 0);
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+
+.ol-popup:before {
+    border-color: rgba(204, 204, 204, 0);
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+
+.ol-popup-closer {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+
+.ol-popup-closer:after {
+    content: "✖";
+}
+
+/* Filter button styles */
+.btn-filter {
+    background: transparent !important;
+    border: none;
+    cursor: pointer;
+    padding: var(--button-padding);
+}
+
+.btn-filter .fa-filter {
+    background: transparent !important;
+    color: rgb(148, 148, 148);
+}
+
+.btn-filter .fa-filter:hover {
+    background: transparent !important;
+    color: rgb(73, 73, 73);
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; /* Ensure the dropdown is positioned relative to the button group */
+}
+
+.button-group .btn-filter {
+    margin-left: auto; /* Push the filter button to the far right */
+}
+
+.filter-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px; /* Reduce padding */
+    width: calc(100% - 10px); /* Adjust width to match the table */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.filter-table {
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse; /* Ensure borders are collapsed */
+}
+
+.filter-table td {
+    padding: 1px; /* Reduce padding */
+    vertical-align: middle;
+    white-space: nowrap; /* Prevent wrapping */
+    border: none; /* Remove borders */
+}
+
+/* Generic badge styling */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 12px;
+    padding: 3px 8px;
+    font-weight: bold;
+    font-size: 0.9em;
+    color: #fff; /* Text color */
+}
+
+/* Circle to the left of status text */
+.status-badge .status-circle {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+/* Requested => stroke: grey, fill: rgba(128, 128, 128, 0.5) */
+.status-requested {
+    background-color: rgba(128, 128, 128, 0.5);
+    border: 2px solid grey;
+}
+.status-requested .status-circle {
+    background-color: grey;
+}
+
+/* Declined => stroke: rgba(139, 0, 0, 0.5), fill: rgba(139, 0, 0, 0.2), dashed border */
+.status-declined {
+    background-color: rgba(139, 0, 0, 0.4);
+    border: 2px dashed rgba(139, 0, 0, 0.5);
+}
+.status-declined .status-circle {
+    background-color: rgba(139, 0, 0, 0.5);
+}
+
+/* Active => stroke: green, fill: rgba(0, 128, 0, 0.5) */
+.status-active {
+    background-color: rgba(0, 128, 0, 0.5);
+    border: 2px solid green;
+}
+.status-active .status-circle {
+    background-color: green;
+}
+
+/* Inactive => stroke: orange, fill: rgba(255, 165, 0, 0.5) */
+.status-inactive {
+    background-color: rgba(240, 155, 0, 0.65);
+    border: 2px solid orange;
+}
+.status-inactive .status-circle {
+    background-color: orange;
+}
+
+/* Expired => stroke: red, fill: rgba(255, 0, 0, 0.2) */
+.status-expired {
+    background-color: rgba(255, 0, 0, 0.4);
+    border: 2px solid red;
+}
+.status-expired .status-circle {
+    background-color: red;
+}
+
+/* Legend box styles */
+.legend-box {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center the content horizontally */
+}
+.legend-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.legend-circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+.legend-circle.inactive {
+    background-color: rgba(255, 165, 0, 0.5); /* Yellow */
+    border: 2px solid orange;
+}
+.legend-circle.active {
+    background-color: rgba(0, 128, 0, 0.5); /* Green */
+    border: 2px solid green;
+}
+.legend-circle.expired {
+    background-color: rgba(255, 0, 0, 0.2); /* Red */
+    border: 2px solid red;
+}
+.legend-circle.requested {
+    background-color: rgba(128, 128, 128, 0.5); /* Grey */
+    border: 2px solid grey;
+}
+.legend-circle.declined {
+    background-color: rgba(139, 0, 0, 0.2); /* Dark Red */
+    border: 2px dashed rgba(139, 0, 0, 0.5);
+}
+
+.location-label {
+    display: flex;
+    align-items: center;
+    margin-right: 0px;
+    width: 225px; /* Set the width */
+}
+
+.map-instruction {
+    font-size: 12px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    width: 400px; /* Set the width */
+    white-space: normal; /* Enable text wrapping */
+    margin-top: -3px; /* Move up by 5px */
+}
+
+.map-instruction i {
+    margin-right: 5px;
+    color: #007bff;
+}
+
+.location-input {
+    flex: 1;
+}
+
+.show-history-label {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+    cursor: pointer;
+    width: auto; /* Adjust width to fit content */
+}
+
+.show-history-label input {
+    margin-right: 5px;
+    width: auto; /* Reduce width */
+    align-self: flex-start; /* Align checkbox to the right */
+}
+
+/* Make the + Add New button wider */
+.btn.btn-primary {
+    padding: 10px 30px; /* Increase padding to make the button wider */
+}

@@ -1,0 +1,105 @@
+<!-- MapApp/templates/MapApp/kml_layer.html -->
+{% load static %}
+<script>
+    // Load KML file and parse features
+    var kmlSource = new ol.source.Vector({
+        url: "{% static 'MapApp/kml/Patrol_Blocks.kml' %}",
+        format: new ol.format.KML()
+    });
+
+    
+    var layers = {};
+
+    kmlSource.on('addfeature', function() {
+        var features = kmlSource.getFeatures();
+        features.forEach(function(feature) {
+            var layerName = feature.get('name') || 'Unnamed Layer';
+            if (!layers[layerName]) {
+                layers[layerName] = new ol.layer.Vector({
+                    source: new ol.source.Vector(),
+                    visible: false // Set layer visibility to false by default
+                });
+                map.addLayer(layers[layerName]);
+            }
+            layers[layerName].getSource().addFeature(feature);
+        });
+
+        // Create layer toggle controls
+        var layerControl = document.getElementById('layer-control');
+        var patrolBlocksContainer = document.createElement('div');
+        patrolBlocksContainer.className = 'layer-group';
+
+        var expandButton = document.createElement('span');
+        expandButton.innerHTML = '>';
+        expandButton.className = 'expand-button';
+        expandButton.onclick = function() {
+            var expanded = patrolBlocksContainer.classList.toggle('expanded');
+            expandButton.innerHTML = expanded ? 'V' : '>';
+        };
+
+        var patrolBlocksIcon = document.createElement('img');
+        patrolBlocksIcon.src = "{% static 'MapApp/icons/eye-off.svg' %}";
+        patrolBlocksIcon.className = 'layer-icon';
+        patrolBlocksIcon.onclick = function() {
+            var visible = patrolBlocksIcon.src.includes('eye-off.svg');
+            patrolBlocksIcon.src = visible ? "{% static 'MapApp/icons/eye.svg' %}" : "{% static 'MapApp/icons/eye-off.svg' %}";
+            for (var layerName in layers) {
+                layers[layerName].setVisible(visible);
+                document.getElementById(layerName).src = visible ? "{% static 'MapApp/icons/eye.svg' %}" : "{% static 'MapApp/icons/eye-off.svg' %}";
+            }
+        };
+
+        var patrolBlocksLabel = document.createElement('label');
+        patrolBlocksLabel.htmlFor = 'patrol-blocks';
+        patrolBlocksLabel.appendChild(document.createTextNode('Patrol Blocks'));
+
+        var headerContainer = document.createElement('div');
+        headerContainer.className = 'header-container';
+        headerContainer.appendChild(expandButton);
+        headerContainer.appendChild(patrolBlocksIcon);
+        headerContainer.appendChild(patrolBlocksLabel);
+
+        patrolBlocksContainer.appendChild(headerContainer);
+
+        var layersContainer = document.createElement('div');
+        layersContainer.className = 'layers-container';
+
+        for (var layerName in layers) {
+            var layerIcon = document.createElement('img');
+            layerIcon.src = "{% static 'MapApp/icons/eye-off.svg' %}";
+            layerIcon.className = 'layer-icon';
+            layerIcon.id = layerName;
+            layerIcon.onclick = function() {
+                var visible = this.src.includes('eye-off.svg');
+                this.src = visible ? "{% static 'MapApp/icons/eye.svg' %}" : "{% static 'MapApp/icons/eye-off.svg' %}";
+                layers[this.id].setVisible(visible);
+                if (!visible) {
+                    patrolBlocksIcon.src = "{% static 'MapApp/icons/eye-off.svg' %}";
+                } else {
+                    var allVisible = true;
+                    for (var layerName in layers) {
+                        if (document.getElementById(layerName).src.includes('eye-off.svg')) {
+                            allVisible = false;
+                            break;
+                        }
+                    }
+                    patrolBlocksIcon.src = allVisible ? "{% static 'MapApp/icons/eye.svg' %}" : "{% static 'MapApp/icons/eye-off.svg' %}";
+                }
+            };
+            var label = document.createElement('label');
+            label.htmlFor = layerName;
+            label.appendChild(document.createTextNode(layerName));
+            layersContainer.appendChild(layerIcon);
+            layersContainer.appendChild(label);
+            layersContainer.appendChild(document.createElement('br'));
+        }
+
+        patrolBlocksContainer.appendChild(layersContainer);
+        layerControl.appendChild(patrolBlocksContainer);
+        
+    });
+
+    map.addLayer(new ol.layer.Vector({
+        source: kmlSource
+    }));
+</script>

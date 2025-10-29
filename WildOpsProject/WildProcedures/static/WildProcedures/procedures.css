@@ -1,0 +1,68 @@
+.procedure-form {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+}
+
+.form-table {
+    width: 60%; /* Set a fixed width for the table */
+    max-width: 800px; /* Optional: Set a maximum width */
+    border-collapse: collapse;
+    border: 1px solid transparent; /* Make borders transparent */
+    margin: 0 auto; /* Center the table */
+}
+
+.form-cell {
+    padding: 10px;
+    vertical-align: top;
+    border: 1px solid transparent; /* Make borders transparent */
+    width: 33%; /* Set column width to 33% */
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.pdf-container {
+    display: flex;
+    flex-direction: row; /* add this */
+    align-items: flex-start; /* helps align top edges */
+    gap: 20px;
+    /* if needed, set a width or max-width on the container or its parent */
+}
+
+.pdf-view {
+    flex: 1;
+    border: 1px solid #ccc;
+    height: 600px;
+    overflow: auto;
+}
+
+.pdf-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid transparent; /* Make borders transparent */
+}
+
+.pdf-cell {
+    width: 50%;
+    padding: 0; /* Set padding to 0 */
+    margin: 0;
+    vertical-align: top;
+    border: 1px solid transparent; /* Make borders transparent */
+}

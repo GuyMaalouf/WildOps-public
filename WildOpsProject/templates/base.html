@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Website{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.css" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/4.6.5/ol.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Taviraj:wght@400;700&family=Libre+Franklin:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <link rel="stylesheet" href="{% static 'MapApp/css/layout.css' %}">
+    <link rel="stylesheet" href="{% static 'MapApp/css/map.css' %}">
+    <link rel="stylesheet" href="{% static 'MapApp/css/layers.css' %}">
+    <link rel="stylesheet" href="{% static 'MapApp/css/utm.css' %}">
+    <link rel="icon" href="{% static 'MapApp/favicon.ico' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
