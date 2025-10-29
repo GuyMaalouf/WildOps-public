@@ -313,7 +313,7 @@ If you use WildOps in your research or project, please cite:
   title = {WildOps: Wildlife Conservation Drone Operations Management System},
   year = {2025},
   publisher = {GitHub},
-  url = {https://github.com/YourUsername/wildops_public}
+  url = {https://github.com/GuyMaalouf/wildops_public}
 }
 ```
 
