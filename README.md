@@ -326,11 +326,6 @@ This work was funded by the European Union’s Horizon Europe research and innov
 - Inspired by best practices in UAS operations and safety management
 - Thanks to all contributors and the open-source community
 
-## 📞 Contact & Support
-
-- **Issues**: Please report bugs and request features through [GitHub Issues](https://github.com/YourUsername/wildops_public/issues)
-- **Discussions**: Join our [community discussions](https://github.com/YourUsername/wildops_public/discussions)
-
 ## 🗺️ Roadmap
 
 - [ ] Mobile application for field operations
